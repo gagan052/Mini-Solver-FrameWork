@@ -15,20 +15,38 @@ public class MiniSolverFrameworkApplication {
 
         SpringApplication.run(MiniSolverFrameworkApplication.class, args);
 
-        MiniFramework framework
-                = new MiniFramework();
+        MiniFramework framework = new MiniFramework();
 
-        SolverEngine engine
-                = framework.start();
+        SolverEngine engine = framework.start();
 
         engine.dispatch(
                 new Event(
                         Command.ADD,
-                        "Parking",
-                        "P-101"
+                        "Building",
+                        "B-101"
                 )
         );
 
+        // MiniFramework framework
+        //         = new MiniFramework();
+        // SolverEngine engine
+        //         = framework.start();
+        // engine.dispatch(
+        //         new Event(
+        //                 Command.ADD,
+        //                 "Parking",
+        //                 "P-101"
+        //         )
+        // );
+        // ConstructorReflectionDemo.inspect();
+        // BeanFactory beanFactory = new BeanFactory();
+        // BuildingSolver s1
+        //         = beanFactory.getBean(BuildingSolver.class);
+        // BuildingSolver s2
+        //         = beanFactory.getBean(BuildingSolver.class);
+        // System.out.println(s1 == s2);
+        // System.out.println(s1);
+        // System.out.println(s2);
         // ReflectionDemo.inspect();
         // SolverManifest manifest = new SolverManifest();
         // manifest.register(
