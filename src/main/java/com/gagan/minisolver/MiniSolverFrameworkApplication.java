@@ -24,8 +24,8 @@ public class MiniSolverFrameworkApplication {
         engine.dispatch(
                 new Event(
                         Command.ADD,
-                        "Building",
-                        "B-101"
+                        "Parking",
+                        "P-101"
                 )
         );
 

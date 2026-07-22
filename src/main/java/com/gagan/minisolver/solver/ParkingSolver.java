@@ -6,16 +6,15 @@ import com.gagan.minisolver.event.Event;
 
 @SolverDefinition(
         command = Command.ADD,
-        objectType = "Building",
-        priority = 1
+        objectType = "Parking",
+        priority = 2
 )
-public class BuildingSolver implements Solver {
+public class ParkingSolver implements Solver {
 
     @Override
     public void solve(Event event) {
 
-        System.out.println("BuildingSolver is processing:");
+        System.out.println("ParkingSolver is processing:");
         System.out.println(event);
-
     }
 }

@@ -1,11 +1,9 @@
 package com.gagan.minisolver.framework;
 
 import com.gagan.minisolver.engine.SolverEngine;
-import com.gagan.minisolver.event.Command;
 import com.gagan.minisolver.manifest.SolverManifest;
-import com.gagan.minisolver.manifest.SolverRegistration;
 import com.gagan.minisolver.pipeline.ExecutionPipeline;
-import com.gagan.minisolver.solver.BuildingSolver;
+import com.gagan.minisolver.registrar.SolverRegistrar;
 
 public class MiniFramework {
 
@@ -13,17 +11,12 @@ public class MiniFramework {
 
         SolverManifest manifest = new SolverManifest();
 
-        manifest.register(
-                new SolverRegistration(
-                        new BuildingSolver(),
-                        Command.ADD,
-                        "Building",
-                        1
-                )
-        );
+        SolverRegistrar registrar = new SolverRegistrar();
 
-        ExecutionPipeline pipeline =
-                new ExecutionPipeline(manifest);
+        registrar.registerSolvers(manifest);
+
+        ExecutionPipeline pipeline
+                = new ExecutionPipeline(manifest);
 
         return new SolverEngine(pipeline);
     }
