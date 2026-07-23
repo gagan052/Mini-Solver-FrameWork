@@ -27,6 +27,15 @@ public class MiniSolverFrameworkApplication {
                 )
         );
 
+        // BeanDefinitionRegistry registry = new BeanDefinitionRegistry();
+
+        // ComponentScanner scanner = new ComponentScanner(registry);
+        // scanner.scan("com.gagan.minisolver");
+
+        // BeanFactory beanFactory = new BeanFactory(registry);
+
+        // BuildingSolver buildingSolver = beanFactory.getBean(BuildingSolver.class);
+
         // MiniFramework framework
         //         = new MiniFramework();
         // SolverEngine engine

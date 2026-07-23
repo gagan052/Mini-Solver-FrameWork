@@ -1,25 +1,44 @@
 package com.gagan.minisolver.registrar;
 
 import com.gagan.minisolver.annotation.SolverDefinition;
+import com.gagan.minisolver.bean.BeanDefinition;
 import com.gagan.minisolver.container.BeanFactory;
 import com.gagan.minisolver.manifest.SolverManifest;
 import com.gagan.minisolver.manifest.SolverRegistration;
+import com.gagan.minisolver.registry.BeanDefinitionRegistry;
 import com.gagan.minisolver.solver.Solver;
-import com.gagan.minisolver.solver.SolverRegistry;
 
 public class SolverRegistrar {
-    private final SolverRegistry registry = new SolverRegistry();
+
+    private final BeanDefinitionRegistry registry;
+    private final BeanFactory beanFactory;
+
+    public SolverRegistrar(
+            BeanDefinitionRegistry registry,
+            BeanFactory beanFactory
+    ) {
+        this.registry = registry;
+        this.beanFactory = beanFactory;
+    }
 
     public void registerSolvers(SolverManifest manifest) {
 
-        var solverClasses = registry.getSolverClasses();
-        BeanFactory beanFactory = new BeanFactory();
+        for (BeanDefinition beanDefinition : registry.getDefinitions()) {
 
-        for (Class<? extends Solver> clazz : solverClasses) {
+            Class<?> beanClass = beanDefinition.getBeanClass();
 
-            Solver solver = beanFactory.getBean(clazz);
-            SolverDefinition definition
-                    = clazz.getAnnotation(SolverDefinition.class);
+            if (!Solver.class.isAssignableFrom(beanClass)) {
+                continue;
+            }
+
+            @SuppressWarnings("unchecked")
+            Class<? extends Solver> solverClass =
+                    (Class<? extends Solver>) beanClass;
+
+            Solver solver = beanFactory.getBean(solverClass);
+
+            SolverDefinition definition =
+                    solverClass.getAnnotation(SolverDefinition.class);
 
             manifest.register(
                     new SolverRegistration(

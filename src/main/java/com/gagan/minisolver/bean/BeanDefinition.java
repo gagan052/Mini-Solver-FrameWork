@@ -11,4 +11,11 @@ public class BeanDefinition {
     public Class<?> getBeanClass() {
         return beanClass;
     }
+
+    @Override
+    public String toString() {
+        return "BeanDefinition{" +
+                "beanClass=" + beanClass.getSimpleName() +
+                '}';
+    }
 }

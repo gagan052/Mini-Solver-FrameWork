@@ -8,8 +8,8 @@ import com.gagan.minisolver.bean.BeanDefinition;
 
 public class BeanDefinitionRegistry {
 
-    private final Map<Class<?>, BeanDefinition> definitions =
-            new HashMap<>();
+    private final Map<Class<?>, BeanDefinition> definitions
+            = new HashMap<>();
 
     public void register(BeanDefinition definition) {
 

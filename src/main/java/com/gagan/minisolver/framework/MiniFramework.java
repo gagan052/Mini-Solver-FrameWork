@@ -1,24 +1,23 @@
 package com.gagan.minisolver.framework;
 
+import com.gagan.minisolver.context.ApplicationContext;
 import com.gagan.minisolver.engine.SolverEngine;
-import com.gagan.minisolver.manifest.SolverManifest;
-import com.gagan.minisolver.pipeline.ExecutionPipeline;
-import com.gagan.minisolver.registrar.SolverRegistrar;
 
 public class MiniFramework {
 
+    private ApplicationContext applicationContext;
+
     public SolverEngine start() {
 
-        SolverManifest manifest = new SolverManifest();
+        applicationContext =
+                new ApplicationContext("com.gagan.minisolver");
 
-        SolverRegistrar registrar = new SolverRegistrar();
+        System.out.println("Framework Bootstrapped");
 
-        registrar.registerSolvers(manifest);
-
-        ExecutionPipeline pipeline
-                = new ExecutionPipeline(manifest);
-
-        return new SolverEngine(pipeline);
+        return applicationContext.getSolverEngine();
     }
 
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
 }
