@@ -1,9 +1,11 @@
 package com.gagan.minisolver.solver;
 
+import com.gagan.minisolver.annotation.Component;
 import com.gagan.minisolver.annotation.SolverDefinition;
 import com.gagan.minisolver.event.Command;
 import com.gagan.minisolver.event.Event;
 
+@Component
 @SolverDefinition(
         command = Command.ADD,
         objectType = "Parking",
