@@ -1,6 +1,7 @@
 package com.gagan.minisolver.scanner;
 
 import com.gagan.minisolver.annotation.Component;
+import com.gagan.minisolver.annotation.Scope;
 import com.gagan.minisolver.bean.BeanDefinition;
 import com.gagan.minisolver.registry.BeanDefinitionRegistry;
 
@@ -29,6 +30,14 @@ public class ComponentScanner {
                 Class<?> clazz = classInfo.loadClass();
 
                 BeanDefinition beanDefinition = new BeanDefinition(clazz);
+
+                if (clazz.isAnnotationPresent(Scope.class)) {
+
+                    Scope scopeAnnotation
+                            = clazz.getAnnotation(Scope.class);
+
+                    beanDefinition.setScope(scopeAnnotation.value());
+                }
 
                 registry.register(beanDefinition);
             }

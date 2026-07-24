@@ -1,6 +1,5 @@
 package com.gagan.minisolver.solver;
 
-import com.gagan.minisolver.annotation.Autowired;
 import com.gagan.minisolver.annotation.Component;
 import com.gagan.minisolver.annotation.SolverDefinition;
 import com.gagan.minisolver.event.Command;
@@ -15,8 +14,11 @@ import com.gagan.minisolver.service.GeometryService;
 )
 public class BuildingSolver implements Solver {
 
-    @Autowired
-    private GeometryService geometryService;
+    private final GeometryService geometryService;
+
+    public BuildingSolver(GeometryService geometryService) {
+        this.geometryService = geometryService;
+    }
 
     @Override
     public void solve(Event event) {
@@ -26,5 +28,4 @@ public class BuildingSolver implements Solver {
         System.out.println("BuildingSolver is processing:");
         System.out.println(event);
     }
-
 }
