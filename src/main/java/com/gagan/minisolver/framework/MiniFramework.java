@@ -20,4 +20,5 @@ public class MiniFramework {
     public ApplicationContext getApplicationContext() {
         return applicationContext;
     }
+
 }
