@@ -11,23 +11,23 @@ import com.gagan.minisolver.solver.Solver;
 
 public class SolverPluginLoader {
 
-    public List<Solver> loadPlugins(String directoryPath) {
+    private final File solverDirectory;
+
+    public SolverPluginLoader(File solverDirectory) {
+        this.solverDirectory = solverDirectory;
+    }
+
+    public List<Solver> loadSolvers() {
 
         List<Solver> solvers = new ArrayList<>();
 
-        File directory = new File(directoryPath);
-
-        if (!directory.exists()) {
-            throw new RuntimeException(
-                    "Solver directory does not exist: " + directory.getAbsolutePath()
-            );
-        }
-
-        File[] jars = directory.listFiles(
-                file -> file.getName().endsWith(".jar")
+        File[] jars = solverDirectory.listFiles(
+                file -> file.isFile()
+                        && file.getName().endsWith(".jar")
         );
 
         if (jars == null) {
+            System.out.println("No solver JARs found.");
             return solvers;
         }
 
@@ -36,39 +36,36 @@ public class SolverPluginLoader {
             try {
 
                 System.out.println(
-                        "Loading solver JAR: " + jar.getName()
+                        "Loading solver plugin: " + jar.getName()
                 );
-
-                URL[] urls = {
-                        jar.toURI().toURL()
-                };
 
                 URLClassLoader classLoader =
                         new URLClassLoader(
-                                urls,
-                                SolverPlugin.class.getClassLoader()
+                                new URL[]{jar.toURI().toURL()},
+                                getClass().getClassLoader()
                         );
 
-                ServiceLoader<SolverPlugin> loader =
+                ServiceLoader<Solver> serviceLoader =
                         ServiceLoader.load(
-                                SolverPlugin.class,
+                                Solver.class,
                                 classLoader
                         );
 
-                for (SolverPlugin plugin : loader) {
+                for (Solver solver : serviceLoader) {
 
                     System.out.println(
-                            "Loaded plugin: "
-                                    + plugin.getClass().getName()
+                            "Loaded solver: "
+                                    + solver.getClass().getName()
                     );
 
-                    solvers.addAll(plugin.getSolvers());
+                    solvers.add(solver);
                 }
 
             } catch (Exception e) {
 
                 throw new RuntimeException(
-                        "Failed to load solver JAR: " + jar.getName(),
+                        "Failed to load solver plugin: "
+                                + jar.getName(),
                         e
                 );
             }

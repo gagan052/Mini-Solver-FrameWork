@@ -19,49 +19,66 @@ public class ApplicationContext {
 
     public ApplicationContext(String basePackage) {
 
-        // Step 1
+        // Step 1: Create bean definition registry
         registry = new BeanDefinitionRegistry();
 
-        // Step 2
-        ComponentScanner scanner = new ComponentScanner(registry);
+        // Step 2: Scan engine classes
+        ComponentScanner scanner =
+                new ComponentScanner(registry);
+
         scanner.scan(basePackage);
 
-        // Step 3
-        beanFactory = new BeanFactory(registry);
+        // Step 3: Create BeanFactory
+        beanFactory =
+                new BeanFactory(registry);
 
-        // Step 4
-        invokeBeanFactoryPostProcessors(registry, beanFactory);
+        // Step 4: Execute BeanFactoryPostProcessors
+        invokeBeanFactoryPostProcessors(
+                registry,
+                beanFactory
+        );
 
-        // Step 5
-        registerBeanPostProcessors(registry, beanFactory);
+        // Step 5: Register BeanPostProcessors
+        registerBeanPostProcessors(
+                registry,
+                beanFactory
+        );
 
-        // Step 6 - NOW create application beans
-        SolverManifest manifest = new SolverManifest();
+        // Step 6: Create Solver Manifest
+        SolverManifest manifest =
+                new SolverManifest();
 
-        SolverRegistrar registrar
-                = new SolverRegistrar(registry, beanFactory);
+        // Step 7: Discover external solver JARs
+        SolverRegistrar registrar =
+                new SolverRegistrar();
 
         registrar.registerSolvers(manifest);
 
-        // Step 7
-        ExecutionPipeline pipeline
-                = new ExecutionPipeline(manifest);
+        // Step 8: Create execution pipeline
+        ExecutionPipeline pipeline =
+                new ExecutionPipeline(manifest);
 
-        solverEngine = new SolverEngine(pipeline);
+        // Step 9: Create SolverEngine
+        solverEngine =
+                new SolverEngine(pipeline);
     }
 
     private void registerBeanPostProcessors(
             BeanDefinitionRegistry registry,
             BeanFactory beanFactory) {
 
-        for (BeanDefinition definition : registry.getDefinitions()) {
+        for (BeanDefinition definition :
+                registry.getDefinitions()) {
 
-            Class<?> beanClass = definition.getBeanClass();
+            Class<?> beanClass =
+                    definition.getBeanClass();
 
-            if (BeanPostProcessor.class.isAssignableFrom(beanClass)) {
+            if (BeanPostProcessor.class
+                    .isAssignableFrom(beanClass)) {
 
-                BeanPostProcessor processor
-                        = (BeanPostProcessor) beanFactory.getBean(beanClass);
+                BeanPostProcessor processor =
+                        (BeanPostProcessor)
+                                beanFactory.getBean(beanClass);
 
                 beanFactory.addBeanPostProcessor(processor);
             }
@@ -72,14 +89,18 @@ public class ApplicationContext {
             BeanDefinitionRegistry registry,
             BeanFactory beanFactory) {
 
-        for (BeanDefinition definition : registry.getDefinitions()) {
+        for (BeanDefinition definition :
+                registry.getDefinitions()) {
 
-            Class<?> beanClass = definition.getBeanClass();
+            Class<?> beanClass =
+                    definition.getBeanClass();
 
-            if (BeanFactoryPostProcessor.class.isAssignableFrom(beanClass)) {
+            if (BeanFactoryPostProcessor.class
+                    .isAssignableFrom(beanClass)) {
 
-                BeanFactoryPostProcessor processor
-                        = (BeanFactoryPostProcessor) beanFactory.getBean(beanClass);
+                BeanFactoryPostProcessor processor =
+                        (BeanFactoryPostProcessor)
+                                beanFactory.getBean(beanClass);
 
                 processor.postProcessBeanFactory(registry);
             }

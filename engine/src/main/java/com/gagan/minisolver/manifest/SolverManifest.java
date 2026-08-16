@@ -10,8 +10,8 @@ import com.gagan.minisolver.event.Event;
 
 public class SolverManifest {
 
-    private final Map<RegistrationKey, List<SolverRegistration>> registrations =
-            new HashMap<>();
+    private final Map<RegistrationKey, List<SolverRegistration>> registrations
+            = new HashMap<>();
 
     public void register(SolverRegistration registration) {
 
@@ -32,9 +32,18 @@ public class SolverManifest {
                 event.getObjectType()
         );
 
-        return registrations.getOrDefault(
-                key,
-                Collections.emptyList()
-        );
+        List<SolverRegistration> matching
+                = registrations.getOrDefault(
+                        key,
+                        Collections.emptyList()
+                );
+
+        return matching.stream()
+                .sorted(
+                        java.util.Comparator.comparingInt(
+                                SolverRegistration::getPriority
+                        )
+                )
+                .toList();
     }
 }

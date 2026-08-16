@@ -9,14 +9,34 @@ allprojects {
     }
 }
 
+// subprojects {
+//     tasks.withType(Jar).configureEach {
+//         doLast {
+//             if (project.path.startsWith(":solvers:")) {
+//                 copy {
+//                     from archiveFile
+//                     into rootProject.file("engine/solvers")
+//                 }
+//             }
+//         }
+//     }
+// }
+
 subprojects {
     tasks.withType(Jar).configureEach {
         doLast {
-            if (project.path.startsWith(":solvers:")) {
+            if (project.path.startsWith(":solvers:")
+                     && project.path != ":solvers:library") {
+
+                def destination =
+                        file("${rootProject.projectDir}/engine/solvers")
+
                 copy {
                     from archiveFile
-                    into rootProject.file("engine/solvers")
+                    into destination
                 }
+
+                println "Copied ${archiveFile.get().asFile.name} → engine/solvers/"
             }
         }
     }

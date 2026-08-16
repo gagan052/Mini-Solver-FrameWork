@@ -1,8 +1,8 @@
 package com.gagan.minisolver.solver;
 
-import com.gagan.minisolver.event.Event;
+import com.gagan.minisolver.engine.SolverResult;
 
 public interface Solver {
 
-    void solve(Event event);
+    SolverResult<?> solve(SolverContext context);
 }

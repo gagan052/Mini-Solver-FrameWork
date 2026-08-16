@@ -1,0 +1,10 @@
+{
+  "id": "warehouse-basic",
+  "name": "Basic Warehouse",
+  "type": "building",
+  "geometry": {
+    "width": 40,
+    "depth": 30,
+    "height": 12
+  }
+}

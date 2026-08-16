@@ -1,0 +1,6 @@
+tasks.register('buildAllSolvers') {
+    dependsOn(
+        ':solvers:building-solver:build',
+        ':solvers:parking-solver:build'
+    )
+}

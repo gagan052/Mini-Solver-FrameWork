@@ -7,6 +7,5 @@ plugins {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
     implementation 'io.github.classgraph:classgraph:4.8.179'
 }

@@ -1,0 +1,45 @@
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.building-editor {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+
+  z-index: 10;
+
+  width: 180px;
+  padding: 16px;
+
+  background: white;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.building-editor label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.building-editor input {
+  padding: 6px;
+}
