@@ -1,34 +1,35 @@
 package com.gagan.minisolver.solver;
 
+import java.util.List;
+
 import com.gagan.minisolver.engine.SolverResult;
 import com.gagan.minisolver.event.Event;
 import com.gagan.minisolver.model.ModelContext;
+import com.gagan.minisolver.pipeline.ExecutionContext;
 
 public class SolverContext {
 
-    private final Event event;
-    private final ModelContext modelContext;
-    private final SolverResult previousResult;
+    private final ExecutionContext executionContext;
 
     public SolverContext(
-            Event event,
-            ModelContext modelContext,
-            SolverResult<?> previousResult) {
+            ExecutionContext executionContext) {
 
-        this.event = event;
-        this.modelContext = modelContext;
-        this.previousResult = previousResult;
+        this.executionContext = executionContext;
     }
 
     public Event getEvent() {
-        return event;
+        return executionContext.getEvent();
     }
 
     public ModelContext getModelContext() {
-        return modelContext;
+        return executionContext.getModelContext();
     }
 
     public SolverResult<?> getPreviousResult() {
-        return previousResult;
+        return executionContext.getPreviousResult();
+    }
+
+    public List<SolverResult<?>> getResults() {
+        return executionContext.getResults();
     }
 }

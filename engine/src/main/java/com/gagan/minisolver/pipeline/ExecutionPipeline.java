@@ -33,15 +33,13 @@ public class ExecutionPipeline {
 
         // var registrations
         //         = manifest.findMatching(event);
-
         // if (registrations.isEmpty()) {
-
         //     context.setStatus(ExecutionStatus.FAILED);
-
         //     return SolverResult.failure(
         //             "No solver found for event: " + event
         //     );
         // }
+        SolverResult<?> lastResult = null;
 
         for (var registration : registrations) {
 
@@ -59,21 +57,18 @@ public class ExecutionPipeline {
                     + registration.getPriority()
             );
 
-            SolverResult<?> result
-                    = registration
-                            .getSolver()
-                            .solve(
-                                    new com.gagan.minisolver.solver.SolverContext(
-                                            context.getEvent(),
-                                            context.getModelContext(),
-                                            context.getPreviousResult()
-                                    )
-                            );
+            lastResult = registration
+                    .getSolver()
+                    .solve(
+                            new com.gagan.minisolver.solver.SolverContext(
+                                    context
+                            )
+                    );
 
-            context.setPreviousResult(result);
-            context.addResult(result);
+            context.setPreviousResult(lastResult);
+            context.addResult(lastResult);
 
-            if (!result.isSuccess()) {
+            if (!lastResult.isSuccess()) {
 
                 context.setStatus(
                         ExecutionStatus.FAILED
@@ -84,12 +79,20 @@ public class ExecutionPipeline {
                         + solverName
                 );
 
-                return result;
+                return lastResult;
             }
         }
 
         context.setStatus(
                 ExecutionStatus.SUCCESS
+        );
+
+        System.out.println(
+                "Execution status: " + context.getStatus()
+        );
+
+        System.out.println(
+                "Solvers executed: " + context.getResults().size()
         );
 
         return context.getPreviousResult();
@@ -98,7 +101,6 @@ public class ExecutionPipeline {
     // public ExecutionContext getContext() {
     //     // return context;
     // }
-
     // public com.gagan.minisolver.model.ModelContext getModelContext() {
     //     return context.getModelContext();
     // }

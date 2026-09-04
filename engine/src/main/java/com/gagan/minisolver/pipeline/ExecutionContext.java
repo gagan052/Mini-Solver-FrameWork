@@ -19,7 +19,8 @@ public class ExecutionContext {
 
     private ExecutionStatus status;
 
-    private final List<SolverResult<?>> results = new ArrayList<>();
+    private final List<SolverResult<?>> results =
+            new ArrayList<>();
 
     public ExecutionContext(
             Event event,
@@ -42,15 +43,30 @@ public class ExecutionContext {
         return previousResult;
     }
 
-    public void setPreviousResult(SolverResult<?> previousResult) {
+    public void setPreviousResult(
+            SolverResult<?> previousResult) {
+
         this.previousResult = previousResult;
+    }
+
+    public void addResult(
+            SolverResult<?> result) {
+
+        results.add(result);
+    }
+
+    public List<SolverResult<?>> getResults() {
+
+        return Collections.unmodifiableList(results);
     }
 
     public String getCurrentSolver() {
         return currentSolver;
     }
 
-    public void setCurrentSolver(String currentSolver) {
+    public void setCurrentSolver(
+            String currentSolver) {
+
         this.currentSolver = currentSolver;
     }
 
@@ -58,15 +74,9 @@ public class ExecutionContext {
         return status;
     }
 
-    public void setStatus(ExecutionStatus status) {
+    public void setStatus(
+            ExecutionStatus status) {
+
         this.status = status;
-    }
-
-    public void addResult(SolverResult<?> result) {
-        results.add(result);
-    }
-
-    public List<SolverResult<?>> getResults() {
-        return Collections.unmodifiableList(results);
     }
 }

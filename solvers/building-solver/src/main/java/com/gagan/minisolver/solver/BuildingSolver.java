@@ -1,18 +1,22 @@
 package com.gagan.minisolver.solver;
 
+import java.util.Map;
+
 import com.gagan.minisolver.annotation.SolverDefinition;
 import com.gagan.minisolver.building.BuildingGeometryGenerator;
 import com.gagan.minisolver.building.BuildingModel;
 import com.gagan.minisolver.engine.SolverResult;
 import com.gagan.minisolver.event.Command;
 import com.gagan.minisolver.event.Event;
+import com.gagan.minisolver.geometry.Solid3D;
 
 @SolverDefinition(
         command = Command.ADD,
         objectType = "Building",
         priority = 1
 )
-public class BuildingSolver implements Solver {
+public class BuildingSolver
+        implements Solver<BuildingModel, Solid3D> {
 
     private final BuildingGeometryGenerator geometryGenerator;
 
@@ -21,7 +25,7 @@ public class BuildingSolver implements Solver {
     }
 
     @Override
-    public SolverResult solve(SolverContext context) {
+    public SolverResult<Solid3D> solve(SolverContext context) {
 
         System.out.println("BuildingSolver is processing:");
 
@@ -29,25 +33,20 @@ public class BuildingSolver implements Solver {
 
         System.out.println(event);
 
+        Map<String, Object> data = event.getData();
+
+        double width = ((Number) data.get("width")).doubleValue();
+        double depth = ((Number) data.get("depth")).doubleValue();
+        double height = ((Number) data.get("height")).doubleValue();
+
         BuildingModel building
                 = new BuildingModel(
                         event.getObjectId(),
-                        20.0,
-                        30.0,
-                        10.0
+                        width,
+                        depth,
+                        height
                 );
-        // BuildingModel building
-        //         = context.getModelContext()
-        //                 .require(
-        //                         building.getId(),
-        //                         BuildingModel.class
-        //                 );
-
-        // System.out.println(
-        //         "Retrieved from ModelContext: "
-        //         + storedBuilding
-        // );
-
+        
         var geometry
                 = geometryGenerator.generate(building);
 

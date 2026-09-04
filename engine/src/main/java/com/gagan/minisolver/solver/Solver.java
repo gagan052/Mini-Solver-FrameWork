@@ -2,7 +2,7 @@ package com.gagan.minisolver.solver;
 
 import com.gagan.minisolver.engine.SolverResult;
 
-public interface Solver {
+public interface Solver<I, O> {
 
-    SolverResult<?> solve(SolverContext context);
+    SolverResult<O> solve(SolverContext context);
 }

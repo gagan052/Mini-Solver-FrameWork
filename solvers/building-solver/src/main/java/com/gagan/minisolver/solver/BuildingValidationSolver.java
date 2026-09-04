@@ -11,17 +11,18 @@ import com.gagan.minisolver.geometry.Solid3D;
         objectType = "Building",
         priority = 2
 )
-public class BuildingValidationSolver implements Solver {
+public class BuildingValidationSolver
+        implements Solver<Solid3D, Solid3D> {
 
     @Override
-    public SolverResult solve(SolverContext context) {
+    public SolverResult<Solid3D> solve(SolverContext context) {
 
-        SolverResult<?> previousResult =
-                context.getPreviousResult();
+        SolverResult<?> previousResult
+                = context.getPreviousResult();
 
         System.out.println(
                 "Previous solver result: "
-                        + previousResult
+                + previousResult
         );
 
         Event event = context.getEvent();
@@ -46,24 +47,22 @@ public class BuildingValidationSolver implements Solver {
             );
         }
 
-        Object data = previousResult.getData();
-
-        if (!(data instanceof Solid3D)) {
-
-            return SolverResult.failure(
-                    "Previous solver did not produce Solid3D"
-            );
-        }
-
-        Solid3D geometry = (Solid3D) data;
+        // Object data = previousResult.getData();
+        // if (!(data instanceof Solid3D)) {
+        //     return SolverResult.failure(
+        //             "Previous solver did not produce Solid3D"
+        //     );
+        // }
+        Solid3D geometry = (Solid3D) previousResult.getData();
 
         System.out.println(
                 "Validation received geometry: "
-                        + geometry
+                + geometry
         );
 
         if (geometry.getVertices().isEmpty()
                 || geometry.getFaces().isEmpty()) {
+
 
             System.out.println(
                     "Building geometry validation failed"

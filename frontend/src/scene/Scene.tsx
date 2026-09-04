@@ -1,17 +1,12 @@
 import { OrbitControls } from "@react-three/drei";
-import { Building } from "../components/Building/Building";
-import type { BuildingInstance } from "../models/BuildingInstance";
-import type { BuildingTemplate } from "../templates/buildingTemplates";
+import { BackendBuilding } from "../components/Building/BackendBuilding";
+import type { Solid3D } from "../geometry/types";
 
 type SceneProps = {
-  building: BuildingInstance;
-  template: BuildingTemplate;
+  solid: Solid3D | null;
 };
 
-export function Scene({
-  building,
-  template,
-}: SceneProps) {
+export function Scene({ solid }: SceneProps) {
   return (
     <>
       <directionalLight position={[5, 5, 5]} />
@@ -20,10 +15,7 @@ export function Scene({
 
       <axesHelper args={[5]} />
 
-      <Building
-        instance={building}
-        template={template}
-      />
+      {solid && <BackendBuilding solid={solid} />}
 
       <OrbitControls />
     </>

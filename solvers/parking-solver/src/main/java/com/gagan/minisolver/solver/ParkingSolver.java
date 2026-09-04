@@ -1,9 +1,8 @@
 package com.gagan.minisolver.solver;
 
 import com.gagan.minisolver.annotation.SolverDefinition;
-import com.gagan.minisolver.event.Command;
-import com.gagan.minisolver.event.Event;
 import com.gagan.minisolver.engine.SolverResult;
+import com.gagan.minisolver.event.Command;
 import com.gagan.minisolver.event.Event;
 
 @SolverDefinition(
@@ -11,17 +10,21 @@ import com.gagan.minisolver.event.Event;
         objectType = "Parking",
         priority = 1
 )
-public class ParkingSolver implements Solver {
+public class ParkingSolver
+        implements Solver<Object, Void> {
 
     @Override
-public SolverResult solve(SolverContext context) {
-    Event event = context.getEvent();
+    public SolverResult<Void> solve(SolverContext context) {
 
-    System.out.println("ParkingSolver is processing: " + event);
+        Event event = context.getEvent();
 
-    return SolverResult.success(
-            "Parking solver executed",
-            null
-    );
-}
+        System.out.println(
+                "ParkingSolver is processing: " + event
+        );
+
+        return SolverResult.success(
+                "Parking solver executed",
+                null
+        );
+    }
 }
