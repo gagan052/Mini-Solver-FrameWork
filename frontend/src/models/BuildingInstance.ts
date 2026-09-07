@@ -16,4 +16,6 @@ export type BuildingInstance = {
     y: number
     z: number
   }
+
+  status: "PLACED" | "GENERATED"
 }

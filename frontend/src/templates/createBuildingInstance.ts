@@ -1,5 +1,5 @@
-import type { BuildingInstance } from "../models/BuildingInstance";
-import type { BuildingTemplate } from "./buildingTemplates";
+import type { BuildingInstance } from "../models/BuildingInstance"
+import type { BuildingTemplate } from "./buildingTemplates"
 
 export function createBuildingInstance(
   template: BuildingTemplate,
@@ -10,6 +10,11 @@ export function createBuildingInstance(
     id,
     templateId: template.id,
     position,
-    geometry: template.defaultGeometry,
-  };
+
+    geometry: {
+      ...template.defaultGeometry,
+    },
+
+    status: "PLACED",
+  }
 }

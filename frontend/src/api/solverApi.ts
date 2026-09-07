@@ -7,7 +7,7 @@ export type EventRequest = {
   command: EventCommand;
   objectType: string;
   objectId: string;
-  data?: Record<string, unknown>;
+  criteria?: Record<string, unknown>;
 };
 
 export type Point3D = {

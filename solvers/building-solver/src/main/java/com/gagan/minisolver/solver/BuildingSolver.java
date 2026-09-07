@@ -9,6 +9,7 @@ import com.gagan.minisolver.engine.SolverResult;
 import com.gagan.minisolver.event.Command;
 import com.gagan.minisolver.event.Event;
 import com.gagan.minisolver.geometry.Solid3D;
+import com.gagan.minisolver.model.Criteria;
 
 @SolverDefinition(
         command = Command.ADD,
@@ -33,11 +34,11 @@ public class BuildingSolver
 
         System.out.println(event);
 
-        Map<String, Object> data = event.getData();
+        Criteria criteria = event.getCriteria();
 
-        double width = ((Number) data.get("width")).doubleValue();
-        double depth = ((Number) data.get("depth")).doubleValue();
-        double height = ((Number) data.get("height")).doubleValue();
+        double width = criteria.get("width", Number.class).doubleValue();
+        double depth = criteria.get("depth", Number.class).doubleValue();
+        double height = criteria.get("height", Number.class).doubleValue();
 
         BuildingModel building
                 = new BuildingModel(
@@ -46,7 +47,7 @@ public class BuildingSolver
                         depth,
                         height
                 );
-        
+
         var geometry
                 = geometryGenerator.generate(building);
 
@@ -74,6 +75,14 @@ public class BuildingSolver
                                 building.getId(),
                                 BuildingModel.class
                         );
+            
+        
+        var buildings
+                = context.getModelContext()
+                        .getAllByType("Building");
+
+        System.out.println("Buildings in ModelContext:");
+        System.out.println(buildings);                
 
         System.out.println("Stored model:");
         System.out.println(storedBuilding);

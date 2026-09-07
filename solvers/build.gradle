@@ -1,6 +1,11 @@
+plugins {
+    id 'base'
+}
+
 tasks.register('buildAllSolvers') {
     dependsOn(
-        ':solvers:building-solver:build',
-        ':solvers:parking-solver:build'
+        ':library:build',
+        ':building-solver:build',
+        ':parking-solver:build'
     )
 }

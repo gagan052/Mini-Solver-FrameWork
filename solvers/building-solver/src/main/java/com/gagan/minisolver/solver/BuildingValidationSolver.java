@@ -47,13 +47,13 @@ public class BuildingValidationSolver
             );
         }
 
-        // Object data = previousResult.getData();
-        // if (!(data instanceof Solid3D)) {
-        //     return SolverResult.failure(
-        //             "Previous solver did not produce Solid3D"
-        //     );
-        // }
-        Solid3D geometry = (Solid3D) previousResult.getData();
+        Object data = previousResult.getData();
+        if (!(data instanceof Solid3D)) {
+            return SolverResult.failure(
+                    "Previous solver did not produce Solid3D"
+            );
+        }
+        Solid3D geometry = (Solid3D) data;
 
         System.out.println(
                 "Validation received geometry: "

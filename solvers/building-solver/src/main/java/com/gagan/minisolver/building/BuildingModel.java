@@ -1,8 +1,8 @@
 package com.gagan.minisolver.building;
 
-public class BuildingModel {
+import com.gagan.minisolver.model.SpatialObject;
 
-    private final String id;
+public class BuildingModel extends SpatialObject {
 
     private final double width;
     private final double depth;
@@ -14,14 +14,11 @@ public class BuildingModel {
             double depth,
             double height) {
 
-        this.id = id;
+        super(id, "Building", "Building");
+
         this.width = width;
         this.depth = depth;
         this.height = height;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public double getWidth() {
@@ -39,7 +36,7 @@ public class BuildingModel {
     @Override
     public String toString() {
         return "BuildingModel{" +
-                "id='" + id + '\'' +
+                "id='" + getId() + '\'' +
                 ", width=" + width +
                 ", depth=" + depth +
                 ", height=" + height +

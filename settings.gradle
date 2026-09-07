@@ -1,7 +1,0 @@
-rootProject.name = 'mini-solver-framework'
-
-include ':engine'
-
-include ':solvers:library'
-include ':solvers:building-solver'
-include ':solvers:parking-solver'

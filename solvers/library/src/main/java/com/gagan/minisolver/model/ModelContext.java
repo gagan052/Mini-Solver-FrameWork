@@ -1,12 +1,13 @@
 package com.gagan.minisolver.model;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ModelContext {
 
-    private final Map<String, Object> objects
-            = new ConcurrentHashMap<>();
+    private final Map<String, Object> objects =
+            new ConcurrentHashMap<>();
 
     public void add(String id, Object object) {
         objects.put(id, object);
@@ -50,5 +51,24 @@ public class ModelContext {
         }
 
         return type.cast(object);
+    }
+
+    public <T> List<T> getAll(Class<T> type) {
+
+        return objects.values()
+                .stream()
+                .filter(type::isInstance)
+                .map(type::cast)
+                .toList();
+    }
+
+    public List<Object> getAllByType(String type) {
+
+        return objects.values()
+                .stream()
+                .filter(object ->
+                        object instanceof SpatialObject spatialObject
+                                && spatialObject.getType().equals(type))
+                .toList();
     }
 }
