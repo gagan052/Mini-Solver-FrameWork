@@ -16,7 +16,7 @@ body,
 
 .building-editor {
   position: absolute;
-  top: 20px;
+  top: 70px;
   left: 20px;
 
   z-index: 10;
@@ -45,8 +45,8 @@ body,
 }
 
 .template-library {
-  position: absolute;
-  top: 24px;
+  position: fixed;
+  top: 70px;
   right: 24px;
 
   width: 240px;
@@ -113,7 +113,7 @@ body,
 
   border-bottom: 1px solid #e5e5e5;
 
-  z-index: 1000;
+  /* z-index: 1000; */
 }
 
 .navigation-brand {

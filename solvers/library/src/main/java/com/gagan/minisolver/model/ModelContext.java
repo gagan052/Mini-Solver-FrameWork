@@ -8,6 +8,9 @@ public class ModelContext {
 
     private final Map<String, Object> objects =
             new ConcurrentHashMap<>();
+    private final SpatialGraph spatialGraph =
+            new SpatialGraph();
+
 
     public void add(String id, Object object) {
         objects.put(id, object);
@@ -71,4 +74,25 @@ public class ModelContext {
                                 && spatialObject.getType().equals(type))
                 .toList();
     }
+
+    public SpatialGraph getSpatialGraph() {
+        return spatialGraph;
+    }
+
+    public void addRelationship(Relationship relationship) {
+        spatialGraph.addRelationship(relationship);
+    }
+
+    public List<Relationship> getRelationshipsFrom(
+            String sourceId) {
+
+        return spatialGraph.getRelationshipsFrom(sourceId);
+    }
+
+    public List<Relationship> getRelationshipsTo(
+            String targetId) {
+
+        return spatialGraph.getRelationshipsTo(targetId);
+    }
+
 }
